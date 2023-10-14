@@ -1,0 +1,26 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="sidenav.toggle();">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Sistema</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav opened="false" mode="side">
+    <mat-nav-list>
+      <button [routerLink]="['monitoreo/inicio']" mat-button class="menu-button">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="developer_board"></mat-icon>
+        <span>Monitoreo</span>
+      </button>
+      <button [routerLink]="['monitoreo/login']" mat-button class="menu-button">
+        <mat-icon>equalizer</mat-icon>
+        <span>Registros</span>
+      </button>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
