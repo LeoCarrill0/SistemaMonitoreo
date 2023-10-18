@@ -3,17 +3,21 @@ import { CommonModule } from '@angular/common';
 import { MonitoreoLoginComponent } from './monitoreo-login/monitoreo-login.component';
 import { MonitoreoCreateComponent } from './monitoreo-create/monitoreo-create.component';
 import { MonitoreoRoutingModule } from './monitoreo-routing.module';
-
-
+import { MonitoreoRegistrosComponent } from './monitoreo-registros/monitoreo-registros.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     MonitoreoLoginComponent,
-    MonitoreoCreateComponent
+    MonitoreoCreateComponent,
+    MonitoreoRegistrosComponent,
   ],
   imports: [
     CommonModule,
-    MonitoreoRoutingModule
+    MonitoreoRoutingModule,
+    FormsModule,
+    HttpClientModule
   ]
 })
 export class MonitoreoModule { }

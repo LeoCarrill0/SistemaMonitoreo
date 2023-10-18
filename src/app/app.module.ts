@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PagesModule } from './pages/pages.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -19,7 +20,8 @@ import { PagesModule } from './pages/pages.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    PagesModule
+    PagesModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
