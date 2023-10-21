@@ -1,33 +1,47 @@
-<div class="content mat-elevation-z8">
-  <div class="container1">
-    <div class="frame">
-      <div class="center">
-        <div class="termometro">
-          <div class="indicatore">
-            <div class="overlay"></div>
+<div class="col-md-6 offset-md-3">
+  <div class="content mat-elevation-z8 justify-content-center">
+    <span>Temperatura</span>
+    <div class="container1">
+      <div class="frame">
+        <div class="center">
+          <div class="termometro">
+            <div class="indicatore">
+              <div class="overlay"></div>
+            </div>
+            <div class="stick" id="stick"></div>
+            <div class="temperatura">
+              <div class="inside n1" id="valor1">0°</div>
+              <br>
+              <div class="where">Temp 1</div>
+            </div>
           </div>
-          <div class="stick" id="stick"></div>
-          <div class="temperatura">
-            <div class="inside n1" id="valor1">0°</div>
-            <br>
-            <div class="where">Temp 1</div>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="center">
+          <div class="termometro">
+            <div class="indicatore">
+              <div class="overlay"></div>
+            </div>
+            <div class="stick" id="stick2"></div>
+            <div class="temperatura">
+              <div class="inside n1" id="valor2">0°</div>
+              <br>
+              <div class="where">Temp 2</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="frame">
-      <div class="center">
-        <div class="termometro">
-          <div class="indicatore">
-            <div class="overlay"></div>
-          </div>
-          <div class="stick" id="stick2"></div>
-          <div class="temperatura">
-            <div class="inside n1" id="valor2">0°</div>
-            <br>
-            <div class="where">Temp 2</div>
-          </div>
-        </div>
+  </div>
+  <div class="content mat-elevation-z8 justify-content-center">
+    <span>Conteo de pollos</span>
+    <div class="divCont">
+      <div class="contadores">
+        <h1>Conteo 1: {{Contador2}}</h1><span></span>
+      </div>
+      <div class="contadores">
+        <h1>Conteo 2: {{Contador2}}</h1>
       </div>
     </div>
   </div>

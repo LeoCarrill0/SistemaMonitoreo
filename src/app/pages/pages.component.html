@@ -3,7 +3,11 @@
     <button mat-icon-button (click)="sidenav.toggle();">
       <mat-icon>menu</mat-icon>
     </button>
-    <h1>Sistema</h1>
+    <h1>
+      <button [routerLink]="['monitoreo/inicio']" mat-button class="menu-button">
+        Sistema
+      </button>
+    </h1>
   </mat-toolbar-row>
 </mat-toolbar>
 

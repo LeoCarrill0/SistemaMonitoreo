@@ -15,12 +15,13 @@ export class MonitoreoLoginComponent {
 
   login() {
     if (this.password != '' || this.user != '') {
-      this.apiService.getDatos(this.user, this.password).subscribe(
+      this.apiService.validarUsuarios(this.user, this.password).subscribe(
         data => {
           this.loginValidacion(data);
         },
         error => {
           this.AlertUser = 'Error al obtener datos de la API:' + error;
+          console.log(error);
         }
       );
     } else {

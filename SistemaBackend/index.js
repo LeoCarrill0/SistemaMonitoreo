@@ -26,15 +26,15 @@ db.connect((err) => {
     console.log('Conectado a la base de datos MySQL');
 });
 
-app.get('/datos', async (req, res) => {
+app.get('/ValidarUsuario', async (req, res) => {
     const userParam = req.query.user;
     const passwordParam = req.query.password;
 
-    const sql = 'SELECT * FROM Usuarios WHERE user = ? AND password = ?';
+    const sql = 'SELECT user, password, prioridadUsuario, enable FROM Usuarios WHERE user = ? AND password = ?';
 
     try {
         const result = await queryDB(sql, [userParam, passwordParam]);
-        const userData = result[0]; 
+        const userData = result[0];
 
         if (userData) {
             res.json({ status: true });
@@ -42,8 +42,7 @@ app.get('/datos', async (req, res) => {
             res.json({ status: false });
         }
     } catch (err) {
-        console.error('Error al ejecutar la consulta:', err);
-        res.status(500).send('Error al obtener los datos');
+        res.status(500).send('Error al obtener los datos ' + err);
     }
 });
 
@@ -59,7 +58,7 @@ function queryDB(sql, params) {
     });
 }
 
-app.post('/insertar-temperatura', async (req, res) => {
+app.post('/insertTemperatura', async (req, res) => {
     const { valorTemperatura, idSensor } = req.body;
 
     const sql = 'INSERT INTO Temperatura (valorTemperatura, idSensor) VALUES (?, ?)';
@@ -68,12 +67,11 @@ app.post('/insertar-temperatura', async (req, res) => {
         await queryDB(sql, [valorTemperatura, idSensor]);
         res.json({ status: true, message: true });
     } catch (err) {
-        console.error('Error al insertar datos de temperatura:', err);
-        res.status(500).send('Error al insertar datos de temperatura');
+        res.status(500).send('Error al insertar datos de temperatura ' + err);
     }
 });
 
-app.post('/insertar-conteo', async (req, res) => {
+app.post('/insertConteo', async (req, res) => {
     const { idContador } = req.body;
 
     const sql = 'INSERT INTO Conteo (idContador) VALUES (?)';
@@ -82,10 +80,99 @@ app.post('/insertar-conteo', async (req, res) => {
         await queryDB(sql, [idContador]);
         res.json({ status: true, message: true });
     } catch (err) {
-        console.error('Error al insertar dato de conteo:', err);
-        res.status(500).send('Error al insertar dato de conteo');
+        res.status(500).send('Error al insertar dato de conteo ' + err);
     }
 });
+
+app.post('/insertUsuario', async (req, res) => {
+  const { user, password, prioridadUsuario } = req.body;
+
+  const sql = 'INSERT INTO Usuarios (user, password, prioridadUsuario, enable) VALUES (?, ?, ?, ?)';
+
+  try {
+      await queryDB(sql, [user, password, prioridadUsuario, 1]);
+      res.json({ status: true, message: true });
+  } catch (err) {
+      res.status(500).send('Error al insertar usuario ' + err);
+      console.log(err)
+  }
+});
+
+
+app.get('/obtenerDatos', async (req, res) => {
+  const tipoConsulta = req.query.tipo;
+
+  switch (tipoConsulta) {
+      case 'T':
+          const idSensor = req.query.idSensor;
+          const inicio = req.query.inicio;
+          const fin = req.query.fin;
+          await obtenerDatosTemperatura(idSensor, inicio, fin, res);
+          break;
+      case 'Tu':
+          const idSensorUltimo = req.query.idSensor;
+          await obtenerUltimoDatoTemperatura(idSensorUltimo, res);
+          break;
+      case 'C':
+          const idContador = req.query.idContador;
+          const inicioC = req.query.inicio;
+          const finC = req.query.fin;
+          await obtenerTotalDatosConteo(idContador, inicioC, finC, res);
+          break;
+      case 'Cu':
+          const idContadorActual = req.query.idContador;
+          await obtenerTotalDatosConteoHoy(idContadorActual, res);
+          break;
+      default:
+          res.status(400).send('Tipo de consulta no válido');
+          break;
+  }
+});
+
+async function obtenerDatosTemperatura(idSensor, inicio, fin, res) {
+  const sql = 'SELECT IdTemperatura, valorTemperatura, idSensor, fechaTemperatura FROM Temperatura WHERE idSensor = ? AND fechaTemperatura BETWEEN ? AND ?';
+  try {
+      const result = await queryDB(sql, [idSensor, inicio, fin]);
+      res.json(result);
+  } catch (err) {
+      console.log('Error al obtener datos de temperatura:', err);
+      res.status(500).send('Error al obtener datos de temperatura');
+  }
+}
+
+async function obtenerUltimoDatoTemperatura(idSensor, res) {
+  const sql = 'SELECT IdTemperatura, valorTemperatura, idSensor, fechaTemperatura FROM Temperatura WHERE idSensor = ? ORDER BY fechaTemperatura DESC LIMIT 1';
+  try {
+      const result = await queryDB(sql, [idSensor]);
+      res.json(result);
+  } catch (err) {
+      console.error('Error al obtener último dato de temperatura:', err);
+      res.status(500).send('Error al obtener último dato de temperatura');
+  }
+}
+
+async function obtenerTotalDatosConteo(idContador, inicio, fin, res) {
+  const sql = 'SELECT DATE(fechaConteo) as fecha, COUNT(*) as total FROM Conteo WHERE idContador = ? AND fechaConteo BETWEEN ? AND ? GROUP BY DATE(fechaConteo)';
+  try {
+      const result = await queryDB(sql, [idContador, inicio, fin]);
+      res.json(result);
+  } catch (err) {
+      console.error('Error al obtener total de datos de conteo:', err);
+      res.status(500).send('Error al obtener total de datos de conteo');
+  }
+}
+
+async function obtenerTotalDatosConteoHoy(idContador, res) {
+  const sql = 'SELECT COUNT(*) as total FROM Conteo WHERE idContador = ? AND DATE(fechaConteo) = CURDATE()';
+  try {
+      const result = await queryDB(sql, [idContador]);
+      res.json(result);
+  } catch (err) {
+      console.error('Error al obtener total de datos de conteo hoy:', err);
+      res.status(500).send('Error al obtener total de datos de conteo hoy');
+  }
+}
+
 
 app.listen(3000, () => {
     console.log('Servidor iniciado en http://localhost:3000');
