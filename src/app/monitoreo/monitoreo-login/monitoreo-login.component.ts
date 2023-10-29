@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MonitoreoService } from '../monitoreo.service';
+import { MonitoreoLoginService } from './monitoreo-login.service';
 
 @Component({
   selector: 'app-monitoreo-login',
@@ -8,7 +9,7 @@ import { MonitoreoService } from '../monitoreo.service';
   styleUrls: ['./monitoreo-login.component.scss']
 })
 export class MonitoreoLoginComponent {
-  constructor(private router: Router, private apiService: MonitoreoService) { }
+  constructor(private router: Router, private apiService: MonitoreoLoginService) { }
   password: string = '';
   user: string = '';
   AlertUser: string = ''
@@ -32,7 +33,7 @@ export class MonitoreoLoginComponent {
   loginValidacion(datos: any) {
     const status = datos.status;
     if (status) {
-      this.router.navigateByUrl('/dashboard/monitoreo/registros');
+      this.router.navigateByUrl('dashboard/monitoreo/registros');
       this.AlertUser = '';
     } else {
       this.AlertUser = 'Datos incorectos';
