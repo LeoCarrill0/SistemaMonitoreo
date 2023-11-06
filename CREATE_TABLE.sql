@@ -1,3 +1,5 @@
+CREATE DATABASE SistemaMonitoreo;
+USE SistemaMonitoreo;
 CREATE TABLE Usuarios (
     id SERIAL PRIMARY KEY,
     user VARCHAR(255) NOT NULL,
