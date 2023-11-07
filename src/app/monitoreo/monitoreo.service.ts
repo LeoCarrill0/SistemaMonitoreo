@@ -1,23 +1,51 @@
 import { Injectable } from '@angular/core';
+import { jwtDecode } from "jwt-decode";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MonitoreoService {
+  constructor(private router: Router) {}
+  private tokenKey = 'miToken'; // Define un nombre para tu clave de token
 
-  constructor() { }
+  // Método para establecer el estado de autenticación
 
-  private isAuthenticated = false;
-
-  login() {
-    this.isAuthenticated = true;
+  guardarToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
   }
 
-  logout() {
-    this.isAuthenticated = false;
+  // Método para obtener el token desde el almacenamiento local
+  obtenerToken() {
+    return localStorage.getItem(this.tokenKey);
   }
 
-  isAuthenticatedUser() {
-    return this.isAuthenticated;
+  // Método para verificar si el usuario está autenticado
+  isAuthenticatedUser(): boolean {
+    const token = this.obtenerToken();
+    if(token){
+      return this.verificarExpiracionToken(token);
+    }
+    return false;
+  }
+
+  verificarExpiracionToken(token: string): boolean {
+    const decodedToken = jwtDecode(token);
+
+    if (decodedToken && decodedToken.exp !== undefined) {
+      const expDate = new Date(0);
+      expDate.setUTCSeconds(decodedToken.exp);
+
+      return expDate > new Date();
+    }
+
+    // Si no hay una expiración definida, puedes manejarlo de acuerdo a tus necesidades
+    return false; // O podrías redirigir al usuario a la página de inicio de sesión
+  }
+
+  cerrarSesion() {
+    localStorage.removeItem(this.tokenKey);
+    this.router.navigateByUrl('dashboard/monitoreo/login');
+
   }
 }

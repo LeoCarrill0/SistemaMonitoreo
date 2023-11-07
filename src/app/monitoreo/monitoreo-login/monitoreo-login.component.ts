@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MonitoreoService } from '../monitoreo.service';
+import { MonitoreoService } from './../monitoreo.service';
 import { MonitoreoLoginService } from './monitoreo-login.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { MonitoreoLoginService } from './monitoreo-login.service';
   styleUrls: ['./monitoreo-login.component.scss']
 })
 export class MonitoreoLoginComponent {
-  constructor(private router: Router, private apiService: MonitoreoLoginService) { }
+  constructor(private router: Router, private apiService: MonitoreoLoginService, private AuthLogin: MonitoreoService) { }
   password: string = '';
   user: string = '';
   AlertUser: string = ''
@@ -33,6 +33,7 @@ export class MonitoreoLoginComponent {
   loginValidacion(datos: any) {
     const status = datos.status;
     if (status) {
+      this.AuthLogin.guardarToken(datos.key);
       this.router.navigateByUrl('dashboard/monitoreo/registros');
       this.AlertUser = '';
     } else {
