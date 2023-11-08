@@ -144,17 +144,6 @@ async function obtenerDatosTemperatura(idSensor, inicio, fin, res) {
   }
 }
 
-async function obtenerUltimoDatoTemperatura(idSensor, res) {
-  const sql = 'SELECT valorTemperatura FROM Temperatura WHERE idSensor = ? ORDER BY fechaTemperatura DESC LIMIT 1';
-  try {
-    const result = await queryDB(sql, [idSensor]);
-    res.json(result);
-  } catch (err) {
-    console.error('Error al obtener último dato de temperatura:', err);
-    res.status(500).send('Error al obtener último dato de temperatura');
-  }
-}
-
 async function obtenerTotalDatosConteo(idContador, inicio, fin, res) {
   const sql = 'SELECT DATE(fechaConteo) as fecha, COUNT(*) as totalDia FROM Conteo WHERE idContador = ? AND fechaConteo BETWEEN ? AND ? GROUP BY DATE(fechaConteo)';
   try {
@@ -163,6 +152,17 @@ async function obtenerTotalDatosConteo(idContador, inicio, fin, res) {
   } catch (err) {
     console.error('Error al obtener totalDia de datos de conteo:', err);
     res.status(500).send('Error al obtener totalDia de datos de conteo');
+  }
+}
+
+async function obtenerUltimoDatoTemperatura(idSensor, res) {
+  const sql = 'SELECT valorTemperatura FROM Temperatura WHERE idSensor = ? ORDER BY fechaTemperatura DESC LIMIT 1';
+  try {
+    const result = await queryDB(sql, [idSensor]);
+    res.json(result);
+  } catch (err) {
+    console.error('Error al obtener último dato de temperatura:', err);
+    res.status(500).send('Error al obtener último dato de temperatura');
   }
 }
 
