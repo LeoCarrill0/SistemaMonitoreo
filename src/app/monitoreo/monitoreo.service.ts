@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 export class MonitoreoService {
   constructor(private router: Router) {}
   private tokenKey = 'miToken'; // Define un nombre para tu clave de token
-
   // Método para establecer el estado de autenticación
 
   guardarToken(token: string) {
@@ -31,21 +30,18 @@ export class MonitoreoService {
 
   verificarExpiracionToken(token: string): boolean {
     const decodedToken = jwtDecode(token);
-
     if (decodedToken && decodedToken.exp !== undefined) {
       const expDate = new Date(0);
       expDate.setUTCSeconds(decodedToken.exp);
-
-      return expDate > new Date();
+      let Exptoken = expDate > new Date();
+      return Exptoken
     }
-
-    // Si no hay una expiración definida, puedes manejarlo de acuerdo a tus necesidades
     return false; // O podrías redirigir al usuario a la página de inicio de sesión
   }
 
-  cerrarSesion() {
+  public cerrarSesion() {
     localStorage.removeItem(this.tokenKey);
-    this.router.navigateByUrl('dashboard/monitoreo/login');
-
+    //this.router.navigateByUrl('dashboard/monitoreo/login');
+    window.location.reload()
   }
 }

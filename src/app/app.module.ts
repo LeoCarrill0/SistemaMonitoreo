@@ -9,7 +9,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PagesModule } from './pages/pages.module';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NgChartsModule } from 'ng2-charts';
 
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     NgbModule,
     PagesModule,
-    HttpClientModule
+    HttpClientModule,
+    NgChartsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

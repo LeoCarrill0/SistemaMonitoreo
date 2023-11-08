@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MonitoreoService } from './../monitoreo.service';
 import { MonitoreoLoginService } from './monitoreo-login.service';
+import { PagesComponent } from '../../pages/pages.component';
 
 @Component({
   selector: 'app-monitoreo-login',
@@ -9,7 +10,7 @@ import { MonitoreoLoginService } from './monitoreo-login.service';
   styleUrls: ['./monitoreo-login.component.scss']
 })
 export class MonitoreoLoginComponent {
-  constructor(private router: Router, private apiService: MonitoreoLoginService, private AuthLogin: MonitoreoService) { }
+  constructor(private router: Router, private apiService: MonitoreoLoginService, private AuthLogin: MonitoreoService, private close: PagesComponent) { }
   password: string = '';
   user: string = '';
   AlertUser: string = ''
@@ -36,10 +37,10 @@ export class MonitoreoLoginComponent {
       this.AuthLogin.guardarToken(datos.key);
       this.router.navigateByUrl('dashboard/monitoreo/registros');
       this.AlertUser = '';
+      this.close.botonDesactivado = !status;
     } else {
       this.AlertUser = 'Datos incorectos';
+      this.close.botonDesactivado = !status;
     }
-    //this.password = btoa(this.password); //encriptar
-    //this.password = atob(this.password); //desencriptar
   }
 }

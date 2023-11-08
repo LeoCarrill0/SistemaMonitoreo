@@ -1,5 +1,26 @@
-<p>monitoreo-registros works!</p>
-
-<div class="col-md-12 d-flex justify-content-center mt-5">
-  <button type="button" class="btn btn-primary" id="btnLogin" (click)="authService.cerrarSesion();">Cerrar Session</button>
+<div class="col-md-8 offset-md-2">
+  <div class="content mat-elevation-z8 justify-content-center">
+    <div>
+      <label class="mt-2 d-flex justify-content-center" for="alert" style="color: red; font-size: medium;">{{AlertSearch}}</label>
+      <form [formGroup]="formulario">
+        <div class="mt-2 d-flex justify-content-center">
+          <label class="lblfecha" for="fechaInicio">Fecha inicio</label>
+          <input class="txtfecha" type="date" formControlName="fechaInicio">
+          <label class="lblfecha" for="fechaFin">Fecha final</label>
+          <input class="txtfecha" type="date" formControlName="fechaFin">
+          <button type="button" class="btn btn-primary" (click)="DatosConteo()">Buscar Conteo</button><br>
+        </div>
+      </form>
+      <canvas id="ctx" width="80" height="20"></canvas>
+    </div>
+  </div>
+  <div class="content mat-elevation-z8 justify-content-center">
+    <div class="mt-2">
+      <div class="col-md-12 d-flex justify-content-center mt-5">
+        <button type="button" class="btn btn-primary" id="btnLogin" (click)="DatosTemperatura()">Buscar
+          Temp</button><br>
+      </div>
+    </div>
+    <canvas id="Tempctx" width="80" height="20"></canvas>
+  </div>
 </div>

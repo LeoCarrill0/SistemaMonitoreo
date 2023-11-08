@@ -1,0 +1,32 @@
+.content {
+  height: calc(45vh - 50px);
+  border-radius: 10px;
+  margin: 16px;
+  margin-left: 32px;
+  font-size: 2rem;
+  color: lightgray;
+}
+
+button{
+  border-left: 20px;
+  display: flex;
+  text-align: center;
+  font-size: medium;
+  position: relative;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.lblfecha{
+  font-size: medium;
+  color: black;
+}
+.txtfecha{
+  font-size: medium;
+  color: black;
+  display: flex;
+  height: 25px;
+  border-bottom: -2px;
+  border-left: 5px;
+  border-right: 5px;
+}
