@@ -6,11 +6,13 @@ import { MonitoreoRoutingModule } from './monitoreo-routing.module';
 import { MonitoreoRegistrosComponent } from './monitoreo-registros/monitoreo-registros.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MonitoreoConteoComponent } from './monitoreo-conteo/monitoreo-conteo.component';
 @NgModule({
   declarations: [
     MonitoreoLoginComponent,
     MonitoreoCreateComponent,
     MonitoreoRegistrosComponent,
+    MonitoreoConteoComponent,
   ],
   imports: [
     CommonModule,

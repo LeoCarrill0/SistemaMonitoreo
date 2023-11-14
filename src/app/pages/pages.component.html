@@ -18,17 +18,28 @@
         <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="developer_board"></mat-icon>
         <span>Monitoreo</span>
       </button>
-      <button [routerLink]="['monitoreo/registros']" mat-button class="menu-button">
-        <mat-icon>equalizer</mat-icon>
-        <span>Registros</span>
-      </button >
-      <button mat-button (click)="close()" class="menu-button" [disabled]="botonDesactivado" [hidden]="botonDesactivado">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let nodo" matTreeNodePadding>
+          <button mat-button (click)="expandir(nodo)" class="menu-button" style="color: white;">
+            {{ nodo.nombre }}
+          </button>
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let nodo; when: tieneHijos" matTreeNodePadding>
+          <button mat-button [attr.aria-label]="'toggle ' + nodo.nombre" (click)="expandir(nodo)" class="menu-button"
+            style="color: white;">
+            <mat-icon>{{ treeControl.isExpanded(nodo) ? 'expand_more' : 'equalizer' }}</mat-icon>
+            {{ nodo.nombre }}
+          </button>
+        </mat-tree-node>
+      </mat-tree>
+      <button mat-button (click)="close()" class="menu-button" [disabled]="botonDesactivado"
+        [hidden]="botonDesactivado">
         <mat-icon>logout</mat-icon>
         <span>Cerrar session</span>
       </button>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

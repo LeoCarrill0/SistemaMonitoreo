@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { MonitoreoCreateComponent } from './monitoreo-create/monitoreo-create.component';
 import { MonitoreoLoginComponent } from './monitoreo-login/monitoreo-login.component';
 import { MonitoreoRegistrosComponent } from './monitoreo-registros/monitoreo-registros.component';
+import { MonitoreoConteoComponent } from './monitoreo-conteo/monitoreo-conteo.component';
 
 const routes: Routes = [
   {path: 'inicio', component: MonitoreoCreateComponent},
   {path: 'login', component: MonitoreoLoginComponent},
-  {path: 'registros', component: MonitoreoRegistrosComponent}
+  {path: 'temperatura', component: MonitoreoRegistrosComponent},
+  {path: 'contador', component: MonitoreoConteoComponent}
 ];
 
 @NgModule({

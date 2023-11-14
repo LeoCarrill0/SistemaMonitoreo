@@ -14,12 +14,13 @@ export class MonitoreoLoginComponent {
   password: string = '';
   user: string = '';
   AlertUser: string = ''
+  url:string = ''
 
-  login() {
+  login(url:string) {
     if (this.password != '' || this.user != '') {
       this.apiService.validarUsuarios(this.user, this.password).subscribe(
         data => {
-          this.loginValidacion(data);
+          this.loginValidacion(data, url);
         },
         error => {
           this.AlertUser = 'Error al obtener datos de la API:' + error;
@@ -31,11 +32,11 @@ export class MonitoreoLoginComponent {
     }
   }
 
-  loginValidacion(datos: any) {
+  loginValidacion(datos: any, url:string) {
     const status = datos.status;
     if (status) {
       this.AuthLogin.guardarToken(datos.key);
-      this.router.navigateByUrl('dashboard/monitoreo/registros');
+      this.router.navigateByUrl(this.close.url);
       this.AlertUser = '';
       this.close.botonDesactivado = !status;
     } else {

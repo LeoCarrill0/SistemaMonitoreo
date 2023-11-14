@@ -11,6 +11,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import { AppRoutingModule } from '../app-routing.module';
 
+import { MatTreeModule } from '@angular/material/tree';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { AppRoutingModule } from '../app-routing.module';
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTreeModule
   ]
 })
 export class PagesModule { }

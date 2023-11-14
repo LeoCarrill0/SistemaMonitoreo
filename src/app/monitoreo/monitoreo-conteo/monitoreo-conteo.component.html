@@ -1,4 +1,3 @@
-
 <div class="col-md-8 offset-md-2">
   <div class="content mat-elevation-z8 justify-content-center">
     <div>
@@ -9,10 +8,10 @@
           <input class="txtfecha" type="date" formControlName="fechaInicio">
           <label class="lblfecha" for="fechaFin">Fecha final</label>
           <input class="txtfecha" type="date" formControlName="fechaFin">
-          <button type="button" class="btn btn-primary" (click)="DatosTemperatura()">Buscar Temperatura</button><br>
+          <button type="button" class="btn btn-primary" (click)="DatosConteo()">Buscar Conteo</button><br>
         </div>
       </form>
-      <canvas id="Tempctx" width="80" height="20"></canvas>
+      <canvas id="ctx" width="80" height="20"></canvas>
     </div>
   </div>
 </div>
