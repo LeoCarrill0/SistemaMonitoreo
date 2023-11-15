@@ -33,7 +33,7 @@ export class MonitoreoRegistrosComponent {
   ngOnInit() {
     const authFlag = this.authService.isAuthenticatedUser();
     if (!authFlag) {
-      this.url = 'dashboard/monitoreo/temperatura';
+      this.url = 'dashboard/monitoreo/temperaturas';
       this.router.navigateByUrl('dashboard/monitoreo/login');
     }
 

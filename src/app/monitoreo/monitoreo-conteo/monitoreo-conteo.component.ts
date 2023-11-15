@@ -33,7 +33,7 @@ export class MonitoreoConteoComponent {
   ngOnInit() {
     const authFlag = this.authService.isAuthenticatedUser();
     if (!authFlag) {
-      this.url = 'dashboard/monitoreo/contador';
+      this.url = 'dashboard/monitoreo/contadores';
       this.router.navigateByUrl('dashboard/monitoreo/login');
     }
 
@@ -84,7 +84,6 @@ export class MonitoreoConteoComponent {
         }
       }
     });
-
   }
 
   DatosConteo() {

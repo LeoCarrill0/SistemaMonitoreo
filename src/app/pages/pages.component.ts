@@ -33,11 +33,11 @@ export class PagesComponent {
       hijos: [
         {
           nombre: 'Temperaturas',
-          url: 'dashboard/monitoreo/temperatura'
+          url: 'dashboard/monitoreo/temperaturas'
         },
         {
           nombre: 'Contadores',
-          url: 'dashboard/monitoreo/contador'
+          url: 'dashboard/monitoreo/contadores'
         }
       ]
     }]/* ... tu estructura de datos del árbol ... */;
@@ -72,9 +72,7 @@ export class PagesComponent {
     this.dataSource.data = this.arbolData;
   }
 
-
   nodosExpandidos: Nodo[] = [];
-
 
   expandir(nodo: NodoPlano): void {
 

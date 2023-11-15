@@ -8,8 +8,8 @@ import { MonitoreoConteoComponent } from './monitoreo-conteo/monitoreo-conteo.co
 const routes: Routes = [
   {path: 'inicio', component: MonitoreoCreateComponent},
   {path: 'login', component: MonitoreoLoginComponent},
-  {path: 'temperatura', component: MonitoreoRegistrosComponent},
-  {path: 'contador', component: MonitoreoConteoComponent}
+  {path: 'temperaturas', component: MonitoreoRegistrosComponent},
+  {path: 'contadores', component: MonitoreoConteoComponent}
 ];
 
 @NgModule({
