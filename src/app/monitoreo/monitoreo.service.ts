@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 })
 export class MonitoreoService {
   constructor(private router: Router) {}
-  private tokenKey = 'miToken'; // Define un nombre para tu clave de token
+  private tokenKey = 'Monitoreo123Pollos'; // Define un nombre para tu clave de token
+  public apiUrl='http://192.168.0.18:4201/';
   // Método para establecer el estado de autenticación
 
   guardarToken(token: string) {
@@ -41,7 +42,6 @@ export class MonitoreoService {
 
   public cerrarSesion() {
     localStorage.removeItem(this.tokenKey);
-    //this.router.navigateByUrl('dashboard/monitoreo/login');
-    window.location.reload()
+    this.router.navigateByUrl('dashboard/monitoreo/inicio');
   }
 }

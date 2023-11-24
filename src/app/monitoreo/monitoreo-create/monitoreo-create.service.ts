@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MonitoreoService } from '../monitoreo.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MonitoreoCreateService {
-
-  Temp1: any;
-  Contador: any;
-  private apiUrl = 'http://localhost:3000/';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private ApiUrl:MonitoreoService) { }
+  
+    Temp1: any;
+    Contador: any;
+    private apiUrl = this.ApiUrl.apiUrl;
 
   async obtenerUltimoDatoTemperatura(idSensor: number): Promise<number> {
     const url = `${this.apiUrl}obtenerDatos?tipo=Tu&idSensor=${idSensor}`;

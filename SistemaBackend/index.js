@@ -9,8 +9,13 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:4200',
+  //origin: 'http://10.42.0.1:4200',
+  // origin: 'http://192.168.1.7:4200',
+  // origin: 'http://10.42.0.1',
+  // origin: 'http://192.168.0.18:4200',
+  origin: 'http://192.168.0.18',
 }));
+
 
 app.use(express.json()); // Habilita el uso de JSON en las solicitudes
 
@@ -32,7 +37,7 @@ app.get('/ValidarUsuario', async (req, res) => {
   const userParam = req.query.user;
   const passwordParam = req.query.password;
 
-  const secretKey = 'Monitoreo123Pollos'; // Debes establecer una clave secreta segura
+  const secretKey = process.env.KEYTOKEN; // Debes establecer una clave secreta segura
   const sql = 'SELECT user, password, prioridadUsuario, enable FROM Usuarios WHERE user = ? AND password = ?';
 
   try {
@@ -177,6 +182,6 @@ async function obtenerTotalDatosConteoHoy(idContador, res) {
   }
 }
 
-app.listen(3000, () => {
-  console.log('Servidor iniciado en http://localhost:3000');
+app.listen(4201, () => {
+  console.log('Servidor iniciado en http://localhost:4201');
 });

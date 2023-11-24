@@ -24,6 +24,7 @@
             "outputPath": "dist/sistema-monitoreo",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "baseHref": "/sistema-monitoreo",
             "polyfills": [
               "zone.js"
             ],
