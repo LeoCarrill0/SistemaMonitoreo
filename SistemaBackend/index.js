@@ -8,6 +8,49 @@ dotenv.config();
 
 const app = express();
 
+/* Inicio conexion i2c */
+//npm install i2c-busz
+const i2c = require('i2c-bus');
+
+const busNumber = 1;
+const i2cAddress = 0x11; 
+
+const i2c1 = i2c.openSync(busNumber);
+
+const data = i2c1.readByteSync(i2cAddress, 0x00);
+console.log(`Valor leído: ${data}`);
+
+const byteToWrite = 0xAA;
+i2c1.writeByteSync(i2cAddress, 0x01, byteToWrite);
+console.log(`Valor escrito: ${byteToWrite}`);
+
+i2c1.closeSync();
+
+/* Interupcion GPIO 5*/
+//npm install onoff
+const Gpio = require('onoff').Gpio;
+
+const buttonPin = new Gpio(5, 'in', 'both'); 
+
+function handleInterrupt(err, value) {
+    if (err) {
+        throw err;
+    }
+
+    console.log(`Botón presionado. Valor: ${value}`);
+}
+
+buttonPin.watch(handleInterrupt);
+
+// Manejador de eventos para capturar señales de interrupción y realizar limpieza
+process.on('SIGINT', () => {
+    buttonPin.unexport(); // Libera el recurso GPIO antes de salir
+    process.exit();
+});
+
+console.log('Esperando la pulsación del botón...');
+
+/* API */
 app.use(cors({
   //origin: 'http://10.42.0.1:4200',
   // origin: 'http://192.168.1.7:4200',
