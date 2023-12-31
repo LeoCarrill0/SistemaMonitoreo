@@ -13,11 +13,11 @@ app.use(cors({
   // origin: 'http://192.168.1.7:4200',
   // origin: 'http://10.42.0.1',
   // origin: 'http://192.168.0.18:4200',
-  origin: 'http://192.168.0.18',
+  origin: 'http://localhost:4200',
 }));
 
 
-app.use(express.json()); // Habilita el uso de JSON en las solicitudes
+app.use(express.json());
 
 const db = mysql.createConnection({
   host: process.env.HOST,
@@ -30,14 +30,14 @@ db.connect((err) => {
   if (err) {
     throw err;
   }
-  console.log('Conectado a la base de datos MySQL');
+  console.log('Conectado a la base de datos...');
 });
 
 app.get('/ValidarUsuario', async (req, res) => {
   const userParam = req.query.user;
   const passwordParam = req.query.password;
 
-  const secretKey = process.env.KEYTOKEN; // Debes establecer una clave secreta segura
+  const secretKey = process.env.KEYTOKEN; 
   const sql = 'SELECT user, password, prioridadUsuario, enable FROM Usuarios WHERE user = ? AND password = ?';
 
   try {
