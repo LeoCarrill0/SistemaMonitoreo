@@ -11,7 +11,7 @@ while True:
     try:
         time.sleep(0.1)
         
-        data = bus.read_i2c_block_data(pic_address, 0, 8) 
+        data = bus.read_i2c_block_data(pic_address, 0,8) 
         print("Datos recibidos desde el PIC:", data)
 
         time.sleep(0.2)

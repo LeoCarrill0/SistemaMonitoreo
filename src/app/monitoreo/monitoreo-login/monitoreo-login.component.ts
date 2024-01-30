@@ -36,9 +36,14 @@ export class MonitoreoLoginComponent {
     const status = datos.status;
     if (status) {
       this.AuthLogin.guardarToken(datos.key);
-      this.router.navigateByUrl(this.close.url);
+      
       this.AlertUser = '';
       this.close.botonDesactivado = !status;
+      if(url=='dashboard/monitoreo/inicio'){
+        this.router.navigateByUrl(url)
+      }else{
+        this.router.navigateByUrl(this.close.url);
+      }
     } else {
       this.AlertUser = 'Datos incorectos';
       this.close.botonDesactivado = !status;

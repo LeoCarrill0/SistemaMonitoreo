@@ -20,6 +20,8 @@ export class MonitoreoConteoComponent {
   ctxTemp: any;
   x: any;
   y: any;
+  x2: any;
+  y2: any;
   AlertSearch: string = '';
   url: string = ''
 
@@ -37,7 +39,7 @@ export class MonitoreoConteoComponent {
       this.router.navigateByUrl('dashboard/monitoreo/login');
     }
 
-    this.ctx = document.getElementById('ctx') as HTMLCanvasElement;
+    this.ctx = document.getElementById('ctxCont-1') as HTMLCanvasElement;
     this.chart = new Chart(this.ctx, {
       type: 'bar',
       data: {
@@ -53,14 +55,44 @@ export class MonitoreoConteoComponent {
           ],
           borderWidth: 1,
           barThickness: 10
-        },
-        {
+        }
+        ]
+      },
+      options: {
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 10, // Ajusta este valor según tus necesidades
+            min: 0,   // Ajusta este valor según tus necesidades
+            grace: '100%',
+            ticks: {
+              stepSize: 100, // Ajusta este valor según tus necesidades
+            }
+          },
+          y: {
+            max: 10, // Ajusta este valor según tus necesidades
+            min: 0,   // Ajusta este valor según tus necesidades
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    this.ctxTemp = document.getElementById('ctxCont-2') as HTMLCanvasElement;
+    this.chartTemp = new Chart(this.ctxTemp, {
+      type: 'bar',
+      data: {
+        labels: [0],
+        datasets: [{
           label: 'Contador 2',
           data: [0],
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)'
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)'
+          ],
           borderWidth: 1,
-          //barPercentage: 0.4 // Ajusta este valor para controlar el ancho de las barras
           barThickness: 10
         }
         ]
@@ -69,7 +101,7 @@ export class MonitoreoConteoComponent {
         scales: {
           x: {
             beginAtZero: true,
-            max: 100, // Ajusta este valor según tus necesidades
+            max: 10, // Ajusta este valor según tus necesidades
             min: 0,   // Ajusta este valor según tus necesidades
             grace: '100%',
             ticks: {
@@ -91,7 +123,11 @@ export class MonitoreoConteoComponent {
       if (this.formulario.value.fechaInicio == this.formulario.value.fechaFin || this.formulario.value.fechaInicio < this.formulario.value.fechaFin) {
         let promise = this.api.obtenerTotalDatosConteo(1, this.formulario.value.fechaInicio, this.formulario.value.fechaFin);
         promise.then(valor => {
-          this.printtemp(valor)
+          this.printtemp(valor, 1)
+        })
+        let promise2 = this.api.obtenerTotalDatosConteo(2, this.formulario.value.fechaInicio, this.formulario.value.fechaFin);
+        promise2.then(valor => {
+          this.printtemp(valor, 2)
         })
         this.AlertSearch = "";
       } else {
@@ -102,10 +138,12 @@ export class MonitoreoConteoComponent {
     }
   }
 
-  printtemp(valor: any) {
+  printtemp(valor: any, Ngrap: Number) {
     let array = valor
     this.x = [];
     this.y = [];
+    this.x2 = [];
+    this.y2 = [];
     for (let i = 0; i < array.length; i++) {
       let objeto = array[i];
       const fecha = new Date(objeto.fecha);
@@ -113,9 +151,22 @@ export class MonitoreoConteoComponent {
       const fechaFormateada = fecha.toLocaleDateString('es-ES');
       this.x[i] = fechaFormateada;
       this.y[i] = objeto.totalDia;
+
+      if (Ngrap == 1) {
+        this.x[i] = fechaFormateada;
+        this.y[i] = objeto.totalDia;
+      } else if (Ngrap == 2) {
+        this.x2[i] = fechaFormateada;
+        this.y2[i] = objeto.totalDia;
+      }
+
     }
     if (this.x) {
-      this.grapic(this.x, this.y);
+      if (Ngrap == 1) {
+        this.grapic(this.x, this.y);
+      } else if (Ngrap == 2) {
+        this.grapic2(this.x2, this.y2)
+      }
     }
   }
 
@@ -123,6 +174,7 @@ export class MonitoreoConteoComponent {
     if (typeof this.chart === 'object') {
       this.chart.destroy()
     }
+    const yMax=Math.max(...y) + 5
     this.chart = new Chart(this.ctx, {
       type: 'bar',
       data: {
@@ -137,15 +189,6 @@ export class MonitoreoConteoComponent {
             'rgba(255, 99, 132, 1)'
           ],
           borderWidth: 1,
-          barThickness: 10
-        },
-        {
-          label: 'Contador 2',
-          data: [1, 5, 7, 4, 5, 6],
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1,
-          //barPercentage: 0.4 // Ajusta este valor para controlar el ancho de las barras
           barThickness: 10
         }
         ]
@@ -162,7 +205,51 @@ export class MonitoreoConteoComponent {
             }
           },
           y: {
-            max: 10, // Ajusta este valor según tus necesidades
+            max: yMax, // Ajusta este valor según tus necesidades
+            min: 0,   // Ajusta este valor según tus necesidades
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  grapic2(x: String[], y: number[]) {
+    if (typeof this.chartTemp === 'object') {
+      this.chartTemp.destroy()
+    }
+    const yMax=Math.max(...y) + 5
+    this.chartTemp = new Chart(this.ctxTemp, {
+      type: 'bar',
+      data: {
+        labels: x,
+        datasets: [{
+          label: 'Contador 2',
+          data: y,
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.1)'
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)'
+          ],
+          borderWidth: 1,
+          barThickness: 10
+        }
+        ]
+      },
+      options: {
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 100, // Ajusta este valor según tus necesidades
+            min: 0,   // Ajusta este valor según tus necesidades
+            grace: '100%',
+            ticks: {
+              stepSize: 100, // Ajusta este valor según tus necesidades
+            }
+          },
+          y: {
+            max: yMax, // Ajusta este valor según tus necesidades
             min: 0,   // Ajusta este valor según tus necesidades
             beginAtZero: true
           }

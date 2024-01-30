@@ -12,6 +12,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.btn{
+  background-color: #201c54;
+}
+
+.spanText{
+  color: white;
+}
+
 .center {
   position: absolute;
   top: 50%;
@@ -85,7 +93,7 @@
           position: absolute;
           transition: all .5s ease-in-out;
           color: #873183;
-          font-size: 50px;
+          font-size: 35px;
 
           &.n2 {
               opacity: 0;
@@ -109,7 +117,20 @@
 }
 
 .content {
-  height: calc(45vh - 50px);
+  height: calc(60vh - 50px);
+  border-radius: 10px;
+  margin: 16px;
+  margin-left: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  color: lightgray;
+}
+
+.contentConteo {
+  height: calc(35vh - 50px);
   border-radius: 10px;
   margin: 16px;
   margin-left: 32px;

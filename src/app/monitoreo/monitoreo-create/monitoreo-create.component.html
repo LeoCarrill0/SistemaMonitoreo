@@ -1,6 +1,7 @@
 <div class="col-md-6 offset-md-3">
   <div class="content mat-elevation-z8 justify-content-center">
     <span>Temperaturas actuales</span>
+    <br>
     <div class="container1">
       <div class="frame">
         <div class="center">
@@ -33,8 +34,29 @@
         </div>
       </div>
     </div>
+    <div [hidden]="botonDesactivado">
+      <div style="display: inline-block; margin-right: 160px; text-align: center;">
+        <input class="form-control mt-2" [(ngModel)]="ganancia1" style="width: 80px; margin: 0 auto;">
+        <br>
+        <button mat-button class="btn btn-primary" (click)="SetAv(1)" style="margin: 0 auto;">
+          <span class="spanText">Asignar ganancia</span>
+        </button>
+      </div>
+      <div style="display: inline-block; margin-right: 0px; text-align: center;">
+        <input class="form-control mt-2" [(ngModel)]="ganancia2" style="width: 80px; margin: 0 auto;">
+        <br>
+        <button mat-button class="btn btn-primary" (click)="SetAv(2)" style="margin: 0 auto;">
+          <span class="spanText">Asignar ganancia</span>
+        </button>
+      </div>
+      <br>
+      <br>
+      <div>
+        <label for="alert" style="color: red;">{{AlertAv}}</label>
+      </div>
+    </div>
   </div>
-  <div class="content mat-elevation-z8 justify-content-center">
+  <div class="contentConteo mat-elevation-z8 justify-content-center">
     <span>Conteo de pollos del dia de hoy</span>
     <br>
     <div class="divCont">

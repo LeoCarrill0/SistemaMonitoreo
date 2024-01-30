@@ -32,6 +32,10 @@ export class PagesComponent {
       nombre: 'Registros',
       hijos: [
         {
+          nombre: 'Ajustar datos',
+          url: 'dashboard/monitoreo/login'
+        },
+        {
           nombre: 'Temperaturas',
           url: 'dashboard/monitoreo/temperaturas'
         },

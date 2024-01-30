@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MonitoreoService } from '../monitoreo.service';
 import { Injectable, NgZone } from '@angular/core';
 import { MonitoreoCreateService } from './monitoreo-create.service';
+import { PagesComponent } from '../../pages/pages.component';
 
 @Component({
   selector: 'app-monitoreo-create',
@@ -10,7 +11,32 @@ import { MonitoreoCreateService } from './monitoreo-create.service';
 })
 
 export class MonitoreoCreateComponent {
-  constructor(private ApiService: MonitoreoCreateService) {
+  constructor(private ApiService: MonitoreoCreateService, public cerrarsession: MonitoreoService) {
+
+    this.ApiService.GetAvApi(1).subscribe(
+      data => {
+        if(data.value){
+          this.ganancia1=data.value;
+        }
+      },
+      error => {
+        this.AlertAv = 'Error al obtener datos de la API:' + error;
+        console.log(error);
+      }
+    );
+
+    this.ApiService.GetAvApi(2).subscribe(
+      data => {
+        if(data.value){
+          this.ganancia2=data.value;
+        }
+      },
+      error => {
+        this.AlertAv = 'Error al obtener datos de la API:' + error;
+        console.log(error);
+      }
+    );
+
     setInterval(() => {
       this.ApiService.obtenerTotalDatosConteoHoy(1).then(valor => {
         this.Contador1 = valor
@@ -41,9 +67,12 @@ export class MonitoreoCreateComponent {
         });
     }, 100);
   }
-
+  
+  ganancia1: string = '';
+  ganancia2: string = '';
   Contador1: any;
   Contador2: any;
+  AlertAv: string = '';
 
   actualizarValor1(valor1: number): void {
     const valor1Element = document.getElementById('valor1');
@@ -54,7 +83,7 @@ export class MonitoreoCreateComponent {
       const stickElement = document.getElementById('stick');
 
       if (stickElement) {
-        const rotation = -50 + (valor1 / 100) * 100;
+        const rotation = -135 + (valor1 / 100) * 100;
         stickElement.style.transform = `rotate(${rotation}deg)`;
       }
     }
@@ -68,9 +97,51 @@ export class MonitoreoCreateComponent {
 
       const stickElement2 = document.getElementById('stick2');
       if (stickElement2) {
-        const rotation = -50 + (valor2 / 100) * 100;
+        const rotation = -135 + (valor2 / 100) * 100;
         stickElement2.style.transform = `rotate(${rotation}deg)`;
       }
     }
+  }
+
+  public botonDesactivado = !this.cerrarsession.isAuthenticatedUser() // Inicialmente desactivado
+
+  SetAv(nSens:number) {
+    if(nSens==1){
+      if(this.ganancia1 != '' ){
+        //const valueUp = this.ApiService.SetAvApi();
+        this.ApiService.SetAvApi(this.ganancia1, nSens).subscribe(
+          data => {
+            if(!data.status){
+              this.ganancia1='';
+            }
+            this.AlertAv = '';
+          },
+          error => {
+            this.AlertAv = 'Error al Setear datos de la API:' + error;
+            console.log(error);
+          }
+        );
+      }else{
+        this.AlertAv = 'Campo vacio favor de asignar el valor'
+      }
+    }else if(nSens==2){
+      if(this.ganancia2 != '' ){
+        this.ApiService.SetAvApi(this.ganancia2, nSens).subscribe(
+          data => {
+            if(!data.status){
+              this.ganancia2='';
+            }
+            this.AlertAv = '';
+          },
+          error => {
+            this.AlertAv = 'Error al Setear datos de la API:' + error;
+            console.log(error);
+          }
+        );
+      }else{
+        this.AlertAv = 'Campo vacio favor de asignar el valor'
+      }
+    }
+    
   }
 }
